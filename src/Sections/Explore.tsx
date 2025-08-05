@@ -1,8 +1,14 @@
 import Image from 'next/image';
 import React from 'react';
 
-const Explore = () => {
-    const features = [
+type Feature = {
+    title: string;
+    description: string;
+    image: string;
+}
+
+const Explore:React.FC = () => {
+    const features:Feature[] = [
         {
           title: 'Interactive Courses',
           description: 'Dive into hands-on tutorials and courses across different domains.',
@@ -22,7 +28,7 @@ const Explore = () => {
       
 
   return (
-    <div id="explore" className="min-h-screen 0  text-gray-900 dark:text-white px-6 py-10">
+    <div id="explore" className="min-h-screen-70  text-gray-900 dark:text-white px-6 py-10">
       <h1 className="text-4xl font-bold mb-6 text-center">Start Exploring</h1>
       <p className="text-lg mb-10 max-w-2xl mx-auto text-center">
         Welcome to the Explore page! Here, you can discover new features, tools, and opportunities to grow your skills and projects.

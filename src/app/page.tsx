@@ -5,6 +5,7 @@ import ThemeToggle from '@/utils/ThemeToggle';
 import { Link as ScrollLink } from 'react-scroll';
 import Link from 'next/link';
 import React from 'react';
+import Product from '@/Sections/Product';
 
 const page = () => {
   return (
@@ -50,6 +51,7 @@ const page = () => {
 
       <div id="explore">
         <Explore />
+        <Product/>
       </div>
     </div>
   );
