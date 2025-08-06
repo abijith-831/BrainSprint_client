@@ -1,4 +1,5 @@
 'use client'
+import ThemeToggle from '@/utils/ThemeToggle';
 import React, { useState } from 'react';
 
 const UserIcon: React.FC = () => (
@@ -68,14 +69,43 @@ const Signin3: React.FC = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent default form reload behavior
+  
+    try {
+      const res = await fetch("http://localhost:7000/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName,
+          email,
+          password,
+        }),
+      });
+  
+      const data = await res.json();
+      console.log("Signup response:", data);
+  
+      // Optional: Redirect, clear form, show success message
+    } catch (error) {
+      console.error("Signup failed:", error);
+    }
+  };
+  
+
   return (
     <div className="flex items-center justify-center h-screen p-4">
+        <div className="absolute top-4 left-4 z-10">
+            <ThemeToggle />
+        </div>
       <div className="w-full max-w-sm">
         {/* Card Container */}
-        <div className="signin-card bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-lg shadow-sm p-6">
+        <div className="signin-card bg-white dark:bg-black border border-gray-900  dark:border-gray-800 rounded-lg shadow-sm p-6">
           {/* Header */}
           <div className="text-center mb-6">
-            <div className="inline-flex items-center justify-center w-12 h-12 bg-gray-100 dark:bg-gray-900 rounded-full mb-4">
+            <div className="inline-flex items-center border justify-center w-12 h-12 bg-gray-100 dark:bg-gray-900 rounded-full mb-4">
               <UserIcon />
             </div>
             <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
@@ -86,10 +116,10 @@ const Signin3: React.FC = () => {
             </p>
           </div>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             {/* Full Name Input */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-900 dark:text-gray-100">
+              <label className="text-sm font-medium text-gray-900  dark:text-gray-100">
                 Full Name
               </label>
               <input
@@ -97,7 +127,7 @@ const Signin3: React.FC = () => {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Enter your full name"
-                className="signin-input w-full px-3 py-2 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-md text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
+                className="signin-input w-full px-3 py-2  bg-white dark:bg-black border border-gray-600 dark:border-gray-800 rounded-md text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
               />
             </div>
 
@@ -115,7 +145,7 @@ const Signin3: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="signin-input w-full pl-9 pr-3 py-2 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-md text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
+                  className="signin-input w-full pl-9 pr-3 py-2 bg-white dark:bg-black border border-gray-600 dark:border-gray-800 rounded-md text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
                 />
               </div>
             </div>
@@ -134,7 +164,7 @@ const Signin3: React.FC = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Create a password"
-                  className="signin-input w-full pl-9 pr-10 py-2 bg-white dark:bg-black border border-gray-200 dark:border-gray-800 rounded-md text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
+                  className="signin-input w-full pl-9 pr-10 py-2 bg-white dark:bg-black border border-gray-600 dark:border-gray-800 rounded-md text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
                 />
                 <button
                   type="button"
@@ -207,11 +237,11 @@ const Signin3: React.FC = () => {
 
           {/* Social Login */}
           <div className="grid grid-cols-2 gap-3">
-            <button className="flex items-center justify-center py-2 px-3 border border-gray-200 dark:border-gray-800 bg-white dark:bg-black text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 transition-all duration-200 text-sm font-medium rounded-md">
+            <button className="flex items-center justify-center py-2 px-3 border border-gray-600 dark:border-gray-800 bg-white dark:bg-black text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 transition-all duration-200 text-sm font-medium rounded-md">
               <TwitterIcon />
               <span className="ml-2">Twitter</span>
             </button>
-            <button className="flex items-center justify-center py-2 px-3 border border-gray-200 dark:border-gray-800 bg-white dark:bg-black text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 transition-all duration-200 text-sm font-medium rounded-md">
+            <button className="flex items-center justify-center py-2 px-3 border border-gray-600 dark:border-gray-800 bg-white dark:bg-black text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-900 transition-all duration-200 text-sm font-medium rounded-md">
               <LinkedInIcon />
               <span className="ml-2">LinkedIn</span>
             </button>
