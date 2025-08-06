@@ -6,6 +6,8 @@ import { Link as ScrollLink } from 'react-scroll';
 import Link from 'next/link';
 import React from 'react';
 import Product from '@/Sections/Product';
+import Developers from '@/Sections/Developers';
+import Companies from '@/Sections/Companies';
 
 const page = () => {
   return (
@@ -13,21 +15,19 @@ const page = () => {
       <nav className="flex justify-between items-center px-48 py-4">
         <div className="text-2xl font-bold">BrainSprint</div>
         <ul className="flex gap-4">
-          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all">
+          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
             <ScrollLink to="explore" smooth={true} duration={500} offset={-70}  >   Explore </ScrollLink>
           </li>
-
-          {/* Use next/link for other pages */}
-          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all">
-            <Link href="/product">Product</Link>
+          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
+            <ScrollLink to="product" smooth={true} duration={500} offset={-70}  >Product</ScrollLink>
           </li>
-          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all">
+          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
             <Link href="/developer">Developer</Link>
           </li>
-          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all">
+          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
             <Link href="/login">Login</Link>
           </li>
-          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all">
+          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
             <Link href="/signup">Signup</Link>
           </li>
           <li className="px-4 py-2 bg-orange-400 rounded-md cursor-pointer hover:bg-orange-500 hover:text-white hover:font-semibold transition-all">
@@ -52,6 +52,8 @@ const page = () => {
       <div id="explore">
         <Explore />
         <Product/>
+        <Developers/>
+        <Companies/>
       </div>
     </div>
   );
