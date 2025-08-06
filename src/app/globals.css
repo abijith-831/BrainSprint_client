@@ -4,9 +4,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
-
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -125,7 +122,6 @@
   }
 }
 
-
 /* @font-face {
   font-family: 'PP Neue Montreal';
   src: url('/fonts/PPNeueMachina-Regular.otf') format('woff2');
@@ -133,10 +129,6 @@
   font-style: normal;
   font-display: swap;
 }
-
-
-
-
 
 /* :root {
   --font-google-sans-code: 'Google Sans Code', monospace;

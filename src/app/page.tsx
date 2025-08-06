@@ -25,11 +25,13 @@ const page = () => {
             <Link href="/developer">Developer</Link>
           </li>
           <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
-            <Link href="/login">Login</Link>
+            <Link href="/auth/login">Login</Link>
           </li>
+          <h1 className=' py-2 cursor-pointer'>or</h1>
           <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
-            <Link href="/signup">Signup</Link>
+            <Link href="/auth/signup">Signup</Link>
           </li>
+          
           <li className="px-4 py-2 bg-orange-400 rounded-md cursor-pointer hover:bg-orange-500 hover:text-white hover:font-semibold transition-all">
             <Link href="/premium">Premium</Link>
           </li>
