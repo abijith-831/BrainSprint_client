@@ -5,7 +5,7 @@ import { useInView, type UseInViewOptions } from 'motion/react';
 import { useTheme } from 'next-themes';
 
 import { cn } from '@/lib/utils';
-import { CopyButton } from '@/components/animate-ui/buttons/copy';
+import { CopyButton} from '@/Components/animate-ui/buttons/copy';
 
 type CodeEditorProps = Omit<React.ComponentProps<'div'>, 'onCopy'> & {
   children: string;
