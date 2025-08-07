@@ -1,5 +1,4 @@
 import { CodeEditor } from '@/Components/animate-ui/components/code-editor'
-import Image from 'next/image'
 import React from 'react'
 import { Atom } from 'lucide-react'
 
