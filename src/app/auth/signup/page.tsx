@@ -1,8 +1,15 @@
 'use client'
 import ThemeToggle from '@/utils/ThemeToggle';
 import React, { useState } from 'react';
+import { signUpRequest } from '@/app/services/user/userAPI';
+import { signupSuccess } from "../../../redux/auth/authSlice";
+import { useDispatch } from "react-redux";
+import { useSnackbar } from 'notistack';
+import { useRouter } from 'next/navigation';
 
 const UserIcon: React.FC = () => (
+
+  
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
     <circle cx="12" cy="7" r="4"></circle>
@@ -59,10 +66,15 @@ const CheckIcon: React.FC = () => (
 
 // Main Component
 const Signin3: React.FC = () => {
+
+  const dispatch = useDispatch()
+  const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
+
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [fullName, setFullName] = useState<string>('');
+  const [username, setFullName] = useState<string>('');
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const togglePasswordVisibility = () => {
@@ -70,29 +82,21 @@ const Signin3: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent default form reload behavior
-  
+    e.preventDefault();
+
     try {
-      const res = await fetch("http://localhost:7000/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fullName,
-          email,
-          password,
-        }),
-      });
-  
-      const data = await res.json();
-      console.log("Signup response:", data);
-  
-      // Optional: Redirect, clear form, show success message
-    } catch (error) {
-      console.error("Signup failed:", error);
+      const res = await signUpRequest({ username, email, password });
+      console.log("Signup success:", res);
+      dispatch(signupSuccess(res.user));
+      enqueueSnackbar(`Welcome to BrainSprint , ${res.user.username}`, { variant: 'success' });
+      router.push('/problems');
+    } catch (error: any) {
+      const message = error?.response?.data?.message || error?.response?.data?.error || "Signup failed. Please try again.";
+      enqueueSnackbar(message, { variant: 'error' });
+      
+      console.error("Signup failed:", error?.response?.data || error.message);
     }
-  };
+  }
   
 
   return (
@@ -124,7 +128,7 @@ const Signin3: React.FC = () => {
               </label>
               <input
                 type="text"
-                value={fullName}
+                value={username}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Enter your full name"
                 className="signin-input w-full px-3 py-2  bg-white dark:bg-black border border-gray-600 dark:border-gray-800 rounded-md text-sm text-gray-900 dark:text-gray-100 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-gray-100 focus:border-transparent transition-all duration-200"
