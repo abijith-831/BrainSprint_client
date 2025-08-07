@@ -90,11 +90,28 @@ const Signin3: React.FC = () => {
       dispatch(signupSuccess(res.user));
       enqueueSnackbar(`Welcome to BrainSprint , ${res.user.username}`, { variant: 'success' });
       router.push('/problems');
-    } catch (error: any) {
-      const message = error?.response?.data?.message || error?.response?.data?.error || "Signup failed. Please try again.";
-      enqueueSnackbar(message, { variant: 'error' });
+    } catch (error:unknown) {
+      let message = "Signup failed. Please try again.";
+    
+      if (error && typeof error === 'object' && 'response' in error) {
+        const errorResponse = error as {
+          response?: {
+            data?: {
+              message?: string;
+              error?: string;
+            };
+          };
+          message?: string;
+        };
+        
+        message = errorResponse.response?.data?.message || 
+                  errorResponse.response?.data?.error || 
+                  errorResponse.message || 
+                  message;
+      }
       
-      console.error("Signup failed:", error?.response?.data || error.message);
+      enqueueSnackbar(message, { variant: 'error' });
+      console.error("Signup failed:", error);
     }
   }
   
