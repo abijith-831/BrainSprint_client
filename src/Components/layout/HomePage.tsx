@@ -8,8 +8,15 @@ import React from 'react';
 import Product from '@/Components/Sections/Product';
 import Developers from '@/Components/Sections/Developers';
 import Companies from '@/Components/Sections/Companies';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store'
 
 const HomePage:React.FC = () => {
+
+  const user = useSelector((state: RootState) => state.auth.currentUser);
+
+  console.log('fsfsf',user);
+  
   return (
     <div className="min-h-screen bg-cover bg-center bg-[url('/images/bg-main-white.jpg')] dark:bg-[url('/images/bg-main-dark.jpg')]">
       <nav className="flex justify-between items-center px-48 py-4">
