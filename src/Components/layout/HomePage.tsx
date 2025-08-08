@@ -54,7 +54,7 @@ const HomePage: React.FC = () => {
             <>
               <li className="px-4 py-2 font-semibold">Hi, {user.username}</li>
               <li
-                className="px-4 py-2 bg-red-500 text-white rounded-md cursor-pointer hover:bg-red-600"
+                className="px-4 py-2 text-red-500 rounded-md cursor-pointer "
                 onClick={() => setShowModal(true)}
               >
                 Logout

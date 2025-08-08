@@ -2,7 +2,7 @@
 import ThemeToggle from '@/utils/ThemeToggle'
 import Link from 'next/link'
 import React from 'react'
-import {  useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
 
 const Navbar:React.FC = () => {
@@ -37,7 +37,7 @@ const Navbar:React.FC = () => {
                   <Link href="/auth/login">Login/Signup</Link>
                 </li>
             ):
-              <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
+              <li className="px-4 py-2 cursor-pointer    text-red-500">
                 <Link href="/auth/login">Logout</Link>
               </li>
             }
