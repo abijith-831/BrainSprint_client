@@ -38,7 +38,7 @@ const Courses:React.FC = () => {
       <div className="flex space-x-6 p-4">
         {features.map((feature, index) => (
           <div  key={index}  className=" relative min-w-[350px] bg-white shadow-lg rounded-lg  transition hover:scale-101 duration-300">
-            <Image  src={feature.image} alt={feature.title} className="w-full h-50 object-cover rounded"/>
+            <Image  src={feature.image} alt={feature.title} width={40} height={40} className="w-full h-50 object-cover rounded"/>
             <div className='absolute inset-0 left-2 top-8'>
                 <h3 className="text-lg font-bold mt-4">{feature.title}</h3>
                 <p className="text-gray-600 dark:text-gray-300 mt-2">{feature.description}</p>

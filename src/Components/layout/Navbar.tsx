@@ -17,10 +17,6 @@ const Navbar:React.FC = () => {
       </div>
       <div>
         <ul className="flex gap-4">
-            
-            <li className="px-4 py-2  cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
-                <Link href="/developer">Explore</Link>
-            </li>
             <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
                 <Link href="/problems">Problems</Link>
             </li>
@@ -36,11 +32,15 @@ const Navbar:React.FC = () => {
             <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
                 <Link href="/store">Store</Link>
             </li>
-            {!currentUser && (
+            {!currentUser ? (
                 <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
                   <Link href="/auth/login">Login/Signup</Link>
                 </li>
-              )}
+            ):
+              <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
+                <Link href="/auth/login">Logout</Link>
+              </li>
+            }
             <li className="px-4 py-2 bg-orange-400 rounded-md cursor-pointer hover:bg-orange-500 hover:text-white hover:font-semibold transition-all">
                 <Link href="/premium">Premium</Link>
             </li>
