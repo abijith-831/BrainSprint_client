@@ -1,4 +1,4 @@
-import Login from '@/Components/ui/login'
+import Login from '@/Components/auth/Login'
 import AuthRedirect from '@/utils/AuthRedirect'
 import React from 'react'
 

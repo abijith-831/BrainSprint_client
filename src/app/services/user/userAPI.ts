@@ -6,6 +6,11 @@ interface SignUpData {
   password: string;
 }
 
+interface loginData{
+  email:string;
+  password:string
+}
+
 export const signUpRequest = async (formData: SignUpData) => {
     
   const response = await api.post("/signup", formData);
@@ -13,3 +18,9 @@ export const signUpRequest = async (formData: SignUpData) => {
   return response.data;
 };
 
+export const loginRequest = async (formData: loginData) => {
+    
+  const response = await api.post("/login", formData);
+  
+  return response.data;
+};

@@ -1,7 +1,11 @@
-
 'use client'
 import ThemeToggle from '@/utils/ThemeToggle';
 import React, { useState } from 'react';
+import { loginRequest } from '@/app/services/user/userAPI';
+import { loginSuccess } from '@/redux/auth/authSlice';
+import { useDispatch } from "react-redux";
+import { useSnackbar } from 'notistack';
+import { useRouter } from 'next/navigation';
 
 const UserIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-zinc-600 dark:text-zinc-400">
@@ -57,6 +61,42 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch()
+  const { enqueueSnackbar } = useSnackbar()
+  const router = useRouter()
+
+  const handleSubmit = async (e:React.FormEvent)=>{
+    e.preventDefault()
+
+    try {
+      const result = await loginRequest({email,password})
+      console.log('loing res',result);
+      dispatch(loginSuccess(result.user))
+      enqueueSnackbar(`Welcome back , ${result.user.username}`,{variant:'success'})
+      router.push('/problems')
+      
+    } catch (error) {
+      let message = "Login failed. Please try again.";
+    
+      if (error && typeof error === 'object' && 'response' in error) {
+        const errorResponse = error as {
+          response?: {
+            data?: {
+              message?: string;
+              error?: string;
+            };
+          };
+          message?: string;
+        };
+        
+        message = errorResponse.response?.data?.message ||  errorResponse.response?.data?.error ||  errorResponse.message ||  message;
+      }
+      
+      enqueueSnackbar(message, { variant: 'error' });
+      console.error("Login failed:", error);
+    }
+  }
+
   return (
 
     <div className="relative w-full flex m items-center h-screen justify-center  overflow-hidden">
@@ -98,46 +138,25 @@ export default function Login() {
         </div>
 
         {/* Form - Shadcn style */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <label htmlFor="email" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-zinc-900 dark:text-zinc-50">
               Email
             </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="name@example.com"
-              className="flex h-9 w-full rounded-md border border-zinc-600 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-5 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50"
-            />
+            <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" className="flex h-9 w-full rounded-md border border-zinc-600 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-5 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50"/>
           </div>
           <div className="space-y-2">
             <label htmlFor="password" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-zinc-900 dark:text-zinc-50">
               Password
             </label>
             <div className="relative">
-              <input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                className="flex h-9 w-full rounded-md border border-zinc-600 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-5 pr-10 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-              >
+              <input type={showPassword ? "text" : "password"} id="password" value={password}   onChange={(e) => setPassword(e.target.value)}   placeholder="Enter your password"  className="flex h-9 w-full rounded-md border border-zinc-600 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 py-5 pr-10 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:cursor-not-allowed disabled:opacity-50" />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors">
                 {showPassword ? <EyeOffIcon /> : <EyeIcon />}
               </button>
             </div>
           </div>
-          <button
-            type="submit"
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:pointer-events-none disabled:opacity-50 bg-zinc-900 text-zinc-50 shadow hover:bg-zinc-900/90 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90 h-9 px-4 py-2 w-full"
-          >
+          <button type="submit"  className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 dark:focus-visible:ring-zinc-300 disabled:pointer-events-none disabled:opacity-50 bg-zinc-900 text-zinc-50 shadow hover:bg-zinc-900/90 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-zinc-50/90 h-9 px-4 py-2 w-full">
             Sign In
           </button>
         </form>
