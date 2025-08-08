@@ -1,15 +1,31 @@
 'use client';
 import ThemeToggle from '@/utils/ThemeToggle'
 import Link from 'next/link'
-import React from 'react'
-import { useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
+import { logout } from '@/redux/auth/authSlice';
+import { useRouter } from 'next/navigation';
+import Modal from '../ui/Modal';
 
 const Navbar:React.FC = () => {
-
+  const [showModal, setShowModal] = useState(false);
   const currentUser = useSelector((state:RootState)=>state.auth.currentUser)
   console.log('navbar',currentUser);
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    dispatch(logout()); 
+    localStorage.removeItem('persist:root'); 
+    router.push('/auth/login'); 
+  };
   
+  const confirmLogout = () => {
+    handleLogout();
+    setShowModal(false);
+  };
+
   return (
     <div className='flex items-center justify-between px-12 py-4 bg-gray-200 border border-b-black dark:border-b-gray-600 dark:bg-gray-950'>
       <div>
@@ -37,9 +53,7 @@ const Navbar:React.FC = () => {
                   <Link href="/auth/login">Login/Signup</Link>
                 </li>
             ):
-              <li className="px-4 py-2 cursor-pointer    text-red-500">
-                <Link href="/auth/login">Logout</Link>
-              </li>
+              <li onClick={() => setShowModal(true)} className="px-4 py-2 cursor-pointer    text-red-500">  Logout</li>
             }
             <li className="px-4 py-2 bg-orange-400 rounded-md cursor-pointer hover:bg-orange-500 hover:text-white hover:font-semibold transition-all">
                 <Link href="/premium">Premium</Link>
@@ -47,7 +61,19 @@ const Navbar:React.FC = () => {
             <ThemeToggle />
         </ul>
       </div>
+      {showModal && (
+        <Modal
+          question="Are you sure?"
+          description="Do you really want to log out? You will need to log in again."
+          onConfirm={confirmLogout}
+          onCancel={() => setShowModal(false)}
+          confirmText="Yes, Logout"
+          cancelText="Cancel"
+        />
+      )}
+
     </div>
+
   )
 }
 

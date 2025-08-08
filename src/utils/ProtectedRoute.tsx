@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from '@/redux/store'; // Adjust path
+import { RootState } from '@/redux/store'; 
 
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const router = useRouter();

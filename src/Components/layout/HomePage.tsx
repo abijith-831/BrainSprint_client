@@ -22,8 +22,8 @@ const HomePage: React.FC = () => {
   const router = useRouter();
 
   const handleLogout = () => {
-    dispatch(logout()); // Clear Redux state
-    localStorage.removeItem('persist:root'); // Optional: clear persisted store
+    dispatch(logout()); 
+    localStorage.removeItem('persist:root'); 
   };
 
   const confirmLogout = () => {

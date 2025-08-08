@@ -1,6 +1,7 @@
 import Courses from '@/Components/layout/Courses'
 import Filter from '@/Components/layout/Filter'
 import Navbar from '@/Components/layout/Navbar'
+import ProblemSet from '@/Components/layout/ProblemSet'
 import React from 'react'
 
 
@@ -18,6 +19,9 @@ const problems = () => {
                
                 <div className='bg-gray-300 dark:bg-gray-900  mt-2 rounded-md'>
                   <Filter/>
+                </div>
+                <div className='bg-gray-300 dark:bg-gray-900 mt-2 rounded-md'>
+                  <ProblemSet/>
                 </div>
             </div>
             <div className='bg-green-400 w-1/4 mt-2 rounded-md' >

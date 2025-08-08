@@ -10,11 +10,11 @@ export default function GuestRoute({ children }: { children: React.ReactNode }) 
 
   useEffect(() => {
     if (user) {
-      router.push('/'); // redirect logged-in users to home (or dashboard)
+      router.push('/'); 
     }
   }, [user, router]);
 
-  if (user) return null; // avoid flashing login page before redirect
+  if (user) return null; 
 
   return <>{children}</>;
 }
