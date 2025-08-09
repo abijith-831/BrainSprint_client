@@ -4,7 +4,7 @@ import Explore from '@/Components/Sections/Explore';
 import ThemeToggle from '@/utils/ThemeToggle';
 import { Link as ScrollLink } from 'react-scroll';
 import Link from 'next/link';
-import { logout } from '@/redux/auth/authSlice';
+import { logout } from '@/redux/slices/authSlice';
 import React, { useState } from 'react';
 import Product from '@/Components/Sections/Product';
 import Developers from '@/Components/Sections/Developers';

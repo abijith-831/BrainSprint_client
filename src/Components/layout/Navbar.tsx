@@ -4,7 +4,7 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '@/redux/store'
-import { logout } from '@/redux/auth/authSlice';
+import { logout } from '@/redux/slices/authSlice';
 import { useRouter } from 'next/navigation';
 import Modal from '../ui/Modal';
 

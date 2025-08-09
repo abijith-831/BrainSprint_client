@@ -2,7 +2,7 @@
 import ThemeToggle from '@/utils/ThemeToggle';
 import React, { useState } from 'react';
 import { loginRequest } from '@/app/services/user/userAPI';
-import { loginSuccess } from '@/redux/auth/authSlice';
+import { loginSuccess } from '@/redux/slices/authSlice';
 import { useDispatch } from "react-redux";
 import { useSnackbar } from 'notistack';
 import { useRouter } from 'next/navigation';

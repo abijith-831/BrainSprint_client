@@ -2,7 +2,7 @@
 import ThemeToggle from '@/utils/ThemeToggle';
 import React, { useState } from 'react';
 import { signUpRequest } from '@/app/services/user/userAPI';
-import { signupSuccess } from "../../redux/auth/authSlice";
+import { signupSuccess } from "../../redux/slices/authSlice";
 import { useDispatch } from "react-redux";
 import { useSnackbar } from 'notistack';
 import { useRouter } from 'next/navigation';
