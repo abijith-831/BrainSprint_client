@@ -53,11 +53,18 @@ function parseProblem(rawText: string): ParsedProblem {
 const Description: React.FC<DescriptionProps> = ({ problem }) => {
   // parse description text into sections
   const parsed = parseProblem(problem.description);
+  console.log('ffff',problem);
+  
 
   return (
-    <div className="p-4">
+    <div className="w-full h-full overflow-y-auto p-4">
       {/* Title */}
       <h1 className="text-2xl font-bold">{problem.id}.{problem.title}</h1>
+      <div className='flex gap-6 mt-2'>
+        <h1 className='bg-gray-700 rounded-full px-3 py-1'>{problem.difficulty}</h1>
+        <h1 className='bg-gray-700 rounded-full px-3 py-1'>Topics</h1>
+        <h1 className='bg-gray-700 rounded-full px-3 py-1'>Companies</h1>
+      </div>
 
       {/* Main description */}
       <p className="mt-4">{parsed.description}</p>
@@ -89,6 +96,42 @@ const Description: React.FC<DescriptionProps> = ({ problem }) => {
           </ul>
         </div>
       )}
+      
+      <hr className="my-4 border-gray-400" />
+      <div className=''>
+        <h2 className='text-sm'>seen this question in real interview before ?</h2>
+        <div className='flex items-center justify-start gap-4 mt-2'>
+          <button className='bg-gray-600 rounded-full px-2 py-1 '>Yes</button>
+          <button className='bg-gray-600 rounded-full px-2 py-1 '>No</button>
+        </div>
+      </div>
+      <hr className="my-4 border-gray-400" />
+      <div className='flex gap-4'>
+        <h1 className=''>Accepted <span className='font-bold '>{problem.accepted}/{problem.submissions}</span></h1>
+        <h1 >Acceptance rate <span className='font-bold '>{problem.acceptance_rate}</span> </h1>
+      </div>
+      <hr className="my-4 border-gray-400" />
+      <div>
+        <h1 className='font-bold'>Topics</h1>
+        {problem.related_topics && problem.related_topics.length > 0 && (
+          <div className="flex flex-wrap gap-2 mt-2">
+            {problem.related_topics
+              .split(',')
+              .map(topic => topic.trim()) // remove whitespace around each topic
+              .filter(topic => topic.length > 0) // filter out empty strings if any
+              .map((topic, index) => (
+                <span
+                  key={index}
+                  className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm"
+                >
+                  {topic}
+                </span>
+              ))}
+          </div>
+        )}
+
+
+      </div>
     </div>
   );
 };

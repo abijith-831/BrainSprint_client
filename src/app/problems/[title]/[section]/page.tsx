@@ -7,7 +7,6 @@ import Description from '@/Components/Sections/Description';
 import TestCases from '@/Components/Sections/TestCases';
 import Solution from '@/Components/Sections/Solutions';
 
-
 interface ProblemSectionProps {
   params: {
     title: string;
@@ -31,43 +30,36 @@ export default function ProblemSectionPage({ params }: ProblemSectionProps) {
   }
 
   return (
-    <div className="min-h-screen">
-      {/* Toggle buttons above the title */}
-      <div className="flex justify-center gap-4 p-4 bg-gray-100">
-        <button
-          className={`px-4 py-2 rounded ${
-            view === 'description' ? 'bg-blue-600 text-white' : 'bg-gray-300'
-          }`}
-          onClick={() => setView('description')}
-        >
+    <div className="h-screen flex flex-col">
+      {/* Button Section - Fixed Height */}
+      <div className="flex justify-start gap-4 px-4 py-2 dark:bg-gray-950 flex-shrink-0">
+        <button  className={`px-4 py-2 rounded ${  view === 'description' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`} onClick={() => setView('description')}>
           Description
         </button>
-        <button
-          className={`px-4 py-2 rounded ${
-            view === 'solution' ? 'bg-blue-600 text-white' : 'bg-gray-300'
-          }`}
-          onClick={() => setView('solution')}
-        >
+        <button  className={`px-4 py-2 rounded ${   view === 'solution' ? 'bg-blue-600 text-white' : 'bg-gray-300' }`}  onClick={() => setView('solution')}>
           Solution
         </button>
       </div>
 
-      <div className="w-full flex items-stretch justify-between min-h-screen">
-        {/* Left Side */}
-        <div className="flex items-center w-1/2 justify-center bg-gray-800 m-2 rounded-md p-4">
-          {view === 'description' ? (
-            <Description problem={currentProblem} />
-          ) : (
-            <Solution problem={currentProblem} />
-          )}
+      {/* Main Content Area - Fills Remaining Space */}
+      <div className="w-full flex justify-between flex-1 min-h-0">
+        {/* Left Side - Scrollable */}
+        <div className="flex w-1/2 bg-gray-900 m-2 rounded-md overflow-hidden">
+          <div className="w-full overflow-y-auto">
+            {view === 'description' ? (
+              <Description problem={currentProblem} />
+            ) : (
+              <Solution problem={currentProblem} />
+            )}
+          </div>
         </div>
 
-        {/* Right Side */}
-        <div className="flex w-1/2 flex-col items-center justify-center min-h-screen gap-2">
-          <div className="flex items-center justify-center w-full h-1/2 rounded-md bg-green-400 mt-2 border-b border-gray-600">
+        {/* Right Side - Fixed Height, No Scroll */}
+        <div className="flex w-1/2 flex-col gap-2 py-2 pr-2">
+          <div className="flex items-center justify-center w-full h-1/2 rounded-md bg-gray-900 border-b border-gray-600">
             <CodeCompiler />
           </div>
-          <div className="flex items-center justify-center w-full h-1/2 bg-yellow-300 rounded-md mb-2 ">
+          <div className="flex items-center justify-center w-full h-1/2 bg-yellow-300 rounded-md">
             <TestCases />
           </div>
         </div>
