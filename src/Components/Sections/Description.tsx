@@ -59,26 +59,26 @@ const Description: React.FC<DescriptionProps> = ({ problem }) => {
   return (
     <div className="w-full h-full overflow-y-auto p-4">
       {/* Title */}
-      <h1 className="text-2xl font-bold">{problem.id}.{problem.title}</h1>
+      <h1 className="text-xl font-bold">{problem.id}.{problem.title}</h1>
       <div className='flex gap-6 mt-2'>
-        <h1 className='bg-gray-700 rounded-full px-3 py-1'>{problem.difficulty}</h1>
-        <h1 className='bg-gray-700 rounded-full px-3 py-1'>Topics</h1>
-        <h1 className='bg-gray-700 rounded-full px-3 py-1'>Companies</h1>
+        <h1 className='bg-neutral-700 rounded-full px-3 py-1'>{problem.difficulty}</h1>
+        <h1 className='bg-neutral-700 rounded-full px-3 py-1'>Topics</h1>
+        <h1 className='bg-neutral-700 rounded-full px-3 py-1'>Companies</h1>
       </div>
 
       {/* Main description */}
-      <p className="mt-4">{parsed.description}</p>
+      <p className="mt-4 text-sm">{parsed.description}</p>
 
       {/* Examples */}
       {parsed.examples.length > 0 && (
         <div className="mt-6">
-          <h2 className="text-lg font-semibold mb-2">Examples</h2>
+          <h2 className="text-md font-semibold mb-2">Examples</h2>
           {parsed.examples.map((ex, i) => (
-            <div key={i} className="p-3 mb-3 rounded bg-gray-700 text-white">
-              <p><strong>Input:</strong> {ex.input}</p>
-              <p><strong>Output:</strong> {ex.output}</p>
+            <div key={i} className="p-3 mb-3 rounded bg-neutral-700 text-white">
+              <p className='text-sm'><strong>Input:</strong> {ex.input}</p>
+              <p className='text-sm'><strong>Output:</strong> {ex.output}</p>
               {ex.explanation && (
-                <p><strong>Explanation:</strong> {ex.explanation}</p>
+                <p className='text-sm'><strong>Explanation:</strong> {ex.explanation}</p>
               )}
             </div>
           ))}
@@ -87,11 +87,11 @@ const Description: React.FC<DescriptionProps> = ({ problem }) => {
 
       {/* Constraints */}
       {parsed.constraints.length > 0 && (
-        <div className="mt-6 bg-gray-700 p-2 rounded-md">
-          <h2 className="text-lg font-semibold mb-2">Constraints</h2>
+        <div className="mt-6 bg-neutral-700 p-2 rounded-md">
+          <h2 className="text-md font-semibold mb-2">Constraints</h2>
           <ul className="list-disc ml-6">
             {parsed.constraints.map((c, i) => (
-              <li key={i}>{c}</li>
+              <li className='text-sm' key={i}>{c}</li>
             ))}
           </ul>
         </div>
@@ -101,8 +101,8 @@ const Description: React.FC<DescriptionProps> = ({ problem }) => {
       <div className=''>
         <h2 className='text-sm'>seen this question in real interview before ?</h2>
         <div className='flex items-center justify-start gap-4 mt-2'>
-          <button className='bg-gray-600 rounded-full px-2 py-1 '>Yes</button>
-          <button className='bg-gray-600 rounded-full px-2 py-1 '>No</button>
+          <button className='bg-neutral-600 rounded-full px-2 py-1 '>Yes</button>
+          <button className='bg-neutral-600 rounded-full px-2 py-1 '>No</button>
         </div>
       </div>
       <hr className="my-4 border-gray-400" />
@@ -122,7 +122,7 @@ const Description: React.FC<DescriptionProps> = ({ problem }) => {
               .map((topic, index) => (
                 <span
                   key={index}
-                  className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm"
+                  className="bg-neutral-600 text-white px-3 py-1 rounded-full text-sm"
                 >
                   {topic}
                 </span>

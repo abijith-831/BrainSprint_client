@@ -13,14 +13,14 @@ const problems = () => {
         <Navbar/>
         <div className='  mx-8 flex gap-4'>
             <div className=' w-3/4 rounded-md mt-2 '>
-                <div className='my-auto bg-gray-300 dark:bg-gray-900 rounded-md '>
+                <div className='my-auto bg-gray-300 dark:bg-neutral-800 rounded-md '>
                   <Courses/>
                 </div>
                
-                <div className='bg-gray-300 dark:bg-gray-900  mt-2 rounded-md'>
+                <div className='bg-gray-300 dark:bg-neutral-800  mt-2 rounded-md'>
                   <Filter/>
                 </div>
-                <div className='bg-gray-300 dark:bg-gray-900 mt-2 rounded-md'>
+                <div className='bg-gray-300 dark:bg-neutral-800 mt-2 rounded-md'>
                   <ProblemSet/>
                 </div>
             </div>

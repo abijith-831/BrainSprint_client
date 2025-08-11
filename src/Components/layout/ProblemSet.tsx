@@ -32,13 +32,13 @@ const ProblemSet: React.FC = () => {
           return (
             <li key={problem.id}>
               <Link href={`/problems/${slug}/description`}>
-                <div className="flex items-center justify-between bg-gray-200 hover:bg-gray-400 dark:bg-gray-700  px-4 py-2 rounded-md gap-2 dark:hover:bg-gray-600 cursor-pointer">
-                  <div className="flex justify-start">
+                <div className="flex items-center justify-between bg-gray-200 hover:bg-gray-400 dark:bg-neutral-700  px-4 py-2 rounded-md gap-2 dark:hover:bg-neutral-600 cursor-pointer">
+                  <div className="flex justify-start text-sm">
                     {index + 1}. {problem.title}
                   </div>
                   <div className="flex items-center justify-end gap-6">
                     <div
-                      className={`flex items-center justify-end ${
+                      className={`flex items-center justify-end text-sm ${
                         problem.difficulty === 'Easy'
                           ? 'text-green-400'
                           : problem.difficulty === 'Medium'
@@ -48,7 +48,7 @@ const ProblemSet: React.FC = () => {
                     >
                       {problem.difficulty}
                     </div>
-                    <div>{problem.acceptance_rate}%</div>
+                    <div className='text-sm '>{problem.acceptance_rate}%</div>
                   </div>
                 </div>
               </Link>

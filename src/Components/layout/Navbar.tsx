@@ -27,7 +27,7 @@ const Navbar:React.FC = () => {
   };
 
   return (
-    <div className='flex items-center justify-between px-12 py-4 bg-gray-200 border border-b-black dark:border-b-gray-600 dark:bg-gray-950'>
+    <div className='flex items-center justify-between px-12 py-3 bg-gray-200 border border-b-black dark:border-b-gray-600 dark:bg-neutral-800'>
       <div>
         <Link href='/' className='px-4 py-2 text-xl font-bold cursor-pointer'>BrainSprint</Link>
       </div>

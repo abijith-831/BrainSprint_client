@@ -32,7 +32,7 @@ export default function ProblemSectionPage({ params }: ProblemSectionProps) {
   return (
     <div className="h-screen flex flex-col">
       {/* Button Section - Fixed Height */}
-      <div className="flex justify-start gap-4 px-4 py-2 dark:bg-gray-950 flex-shrink-0">
+      <div className="flex justify-start gap-4 px-4 py-2 dark:bg-neutral-800 flex-shrink-0">
         <button  className={`px-4 py-2 rounded ${  view === 'description' ? 'bg-blue-600 text-white' : 'bg-gray-300'}`} onClick={() => setView('description')}>
           Description
         </button>
@@ -44,7 +44,7 @@ export default function ProblemSectionPage({ params }: ProblemSectionProps) {
       {/* Main Content Area - Fills Remaining Space */}
       <div className="w-full flex justify-between flex-1 min-h-0">
         {/* Left Side - Scrollable */}
-        <div className="flex w-1/2 bg-gray-900 m-2 rounded-md overflow-hidden">
+        <div className="flex w-1/2 bg-neutral-800 m-2 rounded-md overflow-hidden">
           <div className="w-full overflow-y-auto">
             {view === 'description' ? (
               <Description problem={currentProblem} />
@@ -56,11 +56,11 @@ export default function ProblemSectionPage({ params }: ProblemSectionProps) {
 
         {/* Right Side - Fixed Height, No Scroll */}
         <div className="flex w-1/2 flex-col gap-2 py-2 pr-2">
-          <div className="flex items-center justify-center w-full h-1/2 rounded-md bg-gray-900 border-b border-gray-600">
+          <div className="flex items-center justify-center w-full h-3/5 rounded-md bg-neutral-800 border-b border-gray-600">
             <CodeCompiler />
           </div>
-          <div className="flex items-center justify-center w-full h-1/2 bg-yellow-300 rounded-md">
-            <TestCases />
+          <div className="flex items-center justify-center w-full h-2/5 bg-neutral-800 rounded-md">
+            <TestCases problem={currentProblem.title}/>
           </div>
         </div>
       </div>
