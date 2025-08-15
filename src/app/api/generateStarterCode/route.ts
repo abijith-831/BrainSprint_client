@@ -1,12 +1,25 @@
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Check if API key exists before initializing OpenAI
+const apiKey = process.env.OPENAI_API_KEY;
+
+if (!apiKey) {
+  console.error("OPENAI_API_KEY environment variable is not set");
+}
+
+const openai = apiKey ? new OpenAI({ apiKey }) : null;
 
 export async function POST(req: Request) {
   try {
+    // Check if OpenAI client is available
+    if (!openai) {
+      return NextResponse.json(
+        { error: "OpenAI API key is not configured" }, 
+        { status: 500 }
+      );
+    }
+
     const { questionTitle, questionDescription, language } = await req.json();
 
     const prompt = `
@@ -35,6 +48,8 @@ export async function POST(req: Request) {
     const code = completion.choices[0].message.content || "";
     return NextResponse.json({ code });
   } catch (error: unknown) {
+    console.error("Error in generateStarterCode:", error);
+    
     if (error instanceof Error) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
