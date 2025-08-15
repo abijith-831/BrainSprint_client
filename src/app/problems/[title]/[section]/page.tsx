@@ -6,20 +6,18 @@ import CodeCompiler from '@/Components/Sections/CodeCompiler';
 import Description from '@/Components/Sections/Description';
 import TestCases from '@/Components/Sections/TestCases';
 import Solution from '@/Components/Sections/Solutions';
+import { Problem } from '@/redux/slices/problemSlice'; // ✅ import your type
 
-interface ProblemSectionProps {
-  params: {
-    title: string;
-    section: string;
-  };
-}
-
-export default function ProblemSectionPage({ params }: ProblemSectionProps) {
+export default function ProblemSectionPage({
+  params,
+}: {
+  params: { title: string; section: string };
+}) {
   const { problems } = useSelector((state: RootState) => state.problems);
 
   const formattedTitle = params.title.replace(/-/g, ' ').toLowerCase();
 
-  const currentProblem = problems.find(
+  const currentProblem: Problem | undefined = problems.find(
     (p) => p.title.toLowerCase() === formattedTitle
   );
 
@@ -31,19 +29,33 @@ export default function ProblemSectionPage({ params }: ProblemSectionProps) {
 
   return (
     <div className="h-screen flex flex-col">
-      {/* Button Section - Fixed Height */}
+      {/* Button Section */}
       <div className="flex justify-start gap-4 px-4 py-2 dark:bg-neutral-800 flex-shrink-0">
-        <button  className={`px-4 py-2 rounded ${  view === 'description' ? 'bg-neutral-500 text-white' : 'bg-neutral-600'}`} onClick={() => setView('description')}>
+        <button
+          className={`px-4 py-2 rounded ${
+            view === 'description'
+              ? 'bg-neutral-500 text-white'
+              : 'bg-neutral-600'
+          }`}
+          onClick={() => setView('description')}
+        >
           Description
         </button>
-        <button  className={`px-4 py-2 rounded ${   view === 'solution' ? 'bg-neutral-500 text-white' : 'bg-neutral-600' }`}  onClick={() => setView('solution')}>
+        <button
+          className={`px-4 py-2 rounded ${
+            view === 'solution'
+              ? 'bg-neutral-500 text-white'
+              : 'bg-neutral-600'
+          }`}
+          onClick={() => setView('solution')}
+        >
           Solution
         </button>
       </div>
 
-      {/* Main Content Area - Fills Remaining Space */}
+      {/* Main Content Area */}
       <div className="w-full flex justify-between flex-1 min-h-0">
-        {/* Left Side - Scrollable */}
+        {/* Left Side */}
         <div className="flex w-1/2 bg-neutral-800 m-2 rounded-md overflow-hidden">
           <div className="w-full overflow-y-auto">
             {view === 'description' ? (
@@ -54,13 +66,20 @@ export default function ProblemSectionPage({ params }: ProblemSectionProps) {
           </div>
         </div>
 
-        {/* Right Side - Fixed Height, No Scroll */}
+        {/* Right Side */}
         <div className="flex w-1/2 flex-col gap-2 py-2 pr-2">
           <div className="flex items-center justify-center w-full h-3/5 rounded-md bg-neutral-800 border-b border-gray-600">
-            <CodeCompiler problemId={currentProblem.id} problemTitle={currentProblem.title} problemDescription={currentProblem.description}/>
+            <CodeCompiler
+              problemId={currentProblem.id}
+              problemTitle={currentProblem.title}
+              problemDescription={currentProblem.description}
+            />
           </div>
           <div className="flex items-center justify-center w-full h-2/5 bg-neutral-800 rounded-md">
-            <TestCases problemId={currentProblem.id} problem={currentProblem.description}/>
+            <TestCases
+              problemId={currentProblem.id}
+              problem={currentProblem.description}
+            />
           </div>
         </div>
       </div>
