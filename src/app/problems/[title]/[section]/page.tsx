@@ -6,16 +6,17 @@ import CodeCompiler from '@/Components/Sections/CodeCompiler';
 import Description from '@/Components/Sections/Description';
 import TestCases from '@/Components/Sections/TestCases';
 import Solution from '@/Components/Sections/Solutions';
-import { Problem } from '@/redux/slices/problemSlice'; // ✅ import your type
+import { Problem } from '@/redux/slices/problemSlice';
 
 export default function ProblemSectionPage({
   params,
 }: {
   params: { title: string; section: string };
 }) {
+  const { title } = params;
   const { problems } = useSelector((state: RootState) => state.problems);
 
-  const formattedTitle = params.title.replace(/-/g, ' ').toLowerCase();
+  const formattedTitle = title.replace(/-/g, ' ').toLowerCase();
 
   const currentProblem: Problem | undefined = problems.find(
     (p) => p.title.toLowerCase() === formattedTitle
