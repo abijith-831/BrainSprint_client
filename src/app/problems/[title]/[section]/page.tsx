@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import CodeCompiler from '@/Components/Sections/CodeCompiler';
@@ -9,20 +9,34 @@ import TestCases from '@/Components/Sections/TestCases';
 import Solution from '@/Components/Sections/Solutions';
 import { Problem } from '@/redux/slices/problemSlice';
 
-export default function ProblemSectionPage({
-  params,
-}: {
-  params: { title: string; section: string };
-}) {
-  const { problems } = useSelector((state: RootState) => state.problems);
+interface PageProps {
+  params: Promise<{ title: string; section: string }>;
+}
 
-  const formattedTitle = params.title.replace(/-/g, ' ').toLowerCase();
+export default function ProblemSectionPage({ params }: PageProps) {
+  const { problems } = useSelector((state: RootState) => state.problems);
+  const [resolvedParams, setResolvedParams] = useState<{ title: string; section: string } | null>(null);
+  const [view, setView] = useState<'description' | 'solution'>('description');
+
+  // Resolve the params Promise
+  useEffect(() => {
+    const resolveParams = async () => {
+      const resolved = await params;
+      setResolvedParams(resolved);
+    };
+    resolveParams();
+  }, [params]);
+
+  // Show loading state while params are being resolved
+  if (!resolvedParams) {
+    return <div className="text-center">Loading...</div>;
+  }
+
+  const formattedTitle = resolvedParams.title.replace(/-/g, ' ').toLowerCase();
 
   const currentProblem: Problem | undefined = problems.find(
     (p) => p.title.toLowerCase() === formattedTitle
   );
-
-  const [view, setView] = useState<'description' | 'solution'>('description');
 
   if (!currentProblem) {
     return <div className="text-center text-red-500">Problem not found</div>;
