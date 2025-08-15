@@ -23,8 +23,9 @@ export default function CodeCompiler({
 
   const codeKey = `savedCode_${problemTitle}`;
   const langKey = `savedLanguage_${problemTitle}`;
-
+  
   useEffect(() => {
+
     const savedCode = localStorage.getItem(codeKey);
     const savedLanguage = localStorage.getItem(langKey);
 
@@ -52,14 +53,14 @@ export default function CodeCompiler({
           setIsLoaded(true);
         });
     }
-  }, [problemTitle, problemDescription, language]);
+  }, [problemTitle, problemDescription, language , codeKey , langKey ]);
 
   useEffect(() => {
     if (isLoaded && code) {
       localStorage.setItem(codeKey, code);
       localStorage.setItem(langKey, language);
     }
-  }, [code, language, isLoaded]);
+  }, [code, language, isLoaded , codeKey , langKey]);
 
   const handleTest = async () => {
     try {
@@ -97,11 +98,7 @@ export default function CodeCompiler({
   return (
     <div className="flex flex-col w-full h-full p-2 rounded-md">
       <div className="mb-2 flex justify-between">
-        <select
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-          className="p-1 border rounded text-black"
-        >
+        <select value={language} onChange={(e) => setLanguage(e.target.value)} className="p-1 border rounded text-black">
           <option value="javascript">JavaScript</option>
           <option value="python">Python</option>
           <option value="java">Java</option>
@@ -109,16 +106,10 @@ export default function CodeCompiler({
         </select>
 
         <div className="flex gap-2">
-          <button
-            onClick={handleTest}
-            className="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-          >
+          <button  onClick={handleTest}  className="px-2 py-1 bg-blue-600 text-white rounded hover:bg-blue-700">
             Test
           </button>
-          <button
-            onClick={handleSubmit}
-            className="px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700"
-          >
+          <button onClick={handleSubmit} className="px-2 py-1 bg-green-600 text-white rounded hover:bg-green-700">
             Submit
           </button>
         </div>

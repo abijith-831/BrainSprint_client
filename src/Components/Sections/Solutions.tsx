@@ -1,7 +1,8 @@
 import React from 'react';
+import { Problem } from '@/redux/slices/problemSlice';
 
 interface SolutionProps {
-  problem: any;
+  problem: Problem;
 }
 
 const Solution: React.FC<SolutionProps> = ({ problem }) => {

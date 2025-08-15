@@ -31,7 +31,7 @@ function parseProblem(rawText: string): ParsedProblem {
       .filter(Boolean);
   }
 
-  let examples: Example[] = [];
+  const examples: Example[] = [];
   let match;
   while ((match = exampleRegex.exec(rawText)) !== null) {
     examples.push({

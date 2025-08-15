@@ -39,7 +39,7 @@ interface ProblemState {
   problems: Problem[];
   loading: boolean;
   error: string | null;
-  testCaseResults: Record<number, any[]>;
+  testCaseResults: Record<number, TestCaseResult[]>;
 }
 
 const initialState: ProblemState = {
@@ -56,8 +56,12 @@ export const fetchProblems = createAsyncThunk(
     try {
       const response = await getProblems();
       return response.data; 
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || 'Failed to fetch problems');
+    } catch (err: unknown) {
+      if (typeof err === 'object' && err !== null && 'response' in err) {
+        const e = err as { response?: { data?: { message?: string } } };
+        return rejectWithValue(e.response?.data?.message || 'Failed to fetch problems');
+      }
+      return rejectWithValue('Failed to fetch problems');
     }
   }
 );
@@ -66,7 +70,7 @@ const problemSlice = createSlice({
   name: 'problems',
   initialState,
   reducers: {
-    setTestCaseResults: (state, action: PayloadAction<{ problemId: number; results: any[] }>) => {
+    setTestCaseResults: (state, action: PayloadAction<{ problemId: number; results: TestCaseResult[] }>) => {
       const { problemId, results } = action.payload;
       if (!state.testCaseResults) {
         state.testCaseResults = {}; // ✅ make sure it exists
