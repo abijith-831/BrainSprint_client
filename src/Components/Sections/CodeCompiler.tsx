@@ -1,43 +1,101 @@
 import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
+import { testProblem } from "@/app/services/user/userAPI"; 
+import { useDispatch } from 'react-redux';
+import { setTestCaseResults } from "@/redux/slices/problemSlice";
 
-export default function CodeCompiler() {
+interface CodeCompilerProps {
+  problemId: number;
+  problemTitle: string;
+  problemDescription: string;
+}
+
+export default function CodeCompiler({
+  problemId,
+  problemTitle,
+  problemDescription,
+}: CodeCompilerProps) {
   const [language, setLanguage] = useState("javascript");
-  const [code, setCode] = useState("// Start typing...");
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [code, setCode] = useState("");
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const codeKey = `savedCode_${problemTitle}`;
+  const langKey = `savedLanguage_${problemTitle}`;
 
   useEffect(() => {
-    const savedCode = localStorage.getItem("savedCode");
-    const savedLanguage = localStorage.getItem("savedLanguage");
+    const savedCode = localStorage.getItem(codeKey);
+    const savedLanguage = localStorage.getItem(langKey);
 
-    if (savedCode) setCode(savedCode);
-    if (savedLanguage) setLanguage(savedLanguage);
-
-    setIsLoaded(true);
-  }, []);
+    if (savedCode) {
+      setCode(savedCode);
+      if (savedLanguage) setLanguage(savedLanguage);
+      setIsLoaded(true);
+    } else {
+      fetch("/api/generateStarterCode", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          questionTitle: problemTitle,
+          questionDescription: problemDescription,
+          language,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.code) setCode(data.code);
+          setIsLoaded(true);
+        })
+        .catch(() => {
+          setCode("// Failed to load starter code");
+          setIsLoaded(true);
+        });
+    }
+  }, [problemTitle, problemDescription, language]);
 
   useEffect(() => {
-    if (isLoaded) { 
-      localStorage.setItem("savedCode", code);
-      localStorage.setItem("savedLanguage", language);
+    if (isLoaded && code) {
+      localStorage.setItem(codeKey, code);
+      localStorage.setItem(langKey, language);
     }
   }, [code, language, isLoaded]);
 
-  const handleTest = () => {
-    console.log("Testing code:", code);
-    alert("Test button clicked!\n(Check console for code output)");
+  const handleTest = async () => {
+    try {
+      const result = await testProblem({
+        code,
+        language,
+        title: problemTitle,
+        description: problemDescription,
+      });
+      console.log("Test results:", result);
+      if (result.success) {
+        dispatch(
+          setTestCaseResults({
+            problemId,
+            results: result.results || [],
+          })
+        );
+        console.log("✅ Test results stored in Redux:", result.results);
+      } else {
+        console.error("❌ Test failed:", result.message);
+      }
+      alert(`Test Results: ${JSON.stringify(result)}`);
+    } catch (error) {
+      console.error("Error testing problem:", error);
+      alert("Error while testing problem");
+    }
   };
 
   const handleSubmit = () => {
     console.log("Submitting code:", code);
-    alert("Code submitted successfully!");
   };
 
-  if (!isLoaded) return <div className="text-white">Loading...</div>; 
+  if (!isLoaded) return <div className="text-white">Loading...</div>;
 
   return (
     <div className="flex flex-col w-full h-full p-2 rounded-md">
-      {/* Top Controls */}
       <div className="mb-2 flex justify-between">
         <select
           value={language}
@@ -66,7 +124,6 @@ export default function CodeCompiler() {
         </div>
       </div>
 
-      {/* Editor */}
       <div className="flex-1 border-2 mb-2">
         <Editor
           height="100%"

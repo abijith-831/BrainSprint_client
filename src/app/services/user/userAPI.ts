@@ -32,3 +32,13 @@ export const getProblems = async ()=>{
 
   return response.data;
 }
+
+export const testProblem = async (payload: {
+  code: string;
+  language: string;
+  title: string;
+  description: string;
+}) => {
+  const response = await api.post("/test-problem", payload);
+  return response.data;
+};

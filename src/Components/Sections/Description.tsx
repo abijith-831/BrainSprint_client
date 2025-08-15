@@ -51,9 +51,8 @@ function parseProblem(rawText: string): ParsedProblem {
 }
 
 const Description: React.FC<DescriptionProps> = ({ problem }) => {
-  // parse description text into sections
+
   const parsed = parseProblem(problem.description);
-  console.log('ffff',problem);
   
 
   return (
@@ -108,7 +107,7 @@ const Description: React.FC<DescriptionProps> = ({ problem }) => {
       <hr className="my-4 border-gray-400" />
       <div className='flex gap-4'>
         <h1 className=''>Accepted <span className='font-bold '>{problem.accepted}/{problem.submissions}</span></h1>
-        <h1 >Acceptance rate <span className='font-bold '>{problem.acceptance_rate}</span> </h1>
+        <h1 >Acceptance rate <span className='font-bold '>{problem.acceptance_rate}</span> % </h1>
       </div>
       <hr className="my-4 border-gray-400" />
       <div>
@@ -117,8 +116,8 @@ const Description: React.FC<DescriptionProps> = ({ problem }) => {
           <div className="flex flex-wrap gap-2 mt-2">
             {problem.related_topics
               .split(',')
-              .map(topic => topic.trim()) // remove whitespace around each topic
-              .filter(topic => topic.length > 0) // filter out empty strings if any
+              .map(topic => topic.trim()) 
+              .filter(topic => topic.length > 0) 
               .map((topic, index) => (
                 <span
                   key={index}

@@ -1,39 +1,47 @@
 import { useEffect, useState } from "react";
 
 interface TestCasesProps {
-  problem: string;
+  problemId:number;
+  problem: string; 
 }
 
 interface TestCase {
-  input: any;
-  output: any;
+  input: string;
+  output: string;
+  explanation?: string;
 }
 
-const TestCases: React.FC<TestCasesProps> = ({ problem }) => {
+function parseExamples(rawText: string) {
+  const exampleRegex =
+    /Example\s*\d*:\s*Input:\s*(.*?)\s*Output:\s*(.*?)\s*(?:Explanation:\s*(.*?))?(?=Example|\nConstraints|$)/gs;
+
+  const examples = [];
+  let match;
+
+  while ((match = exampleRegex.exec(rawText)) !== null) {
+    examples.push({
+      input: match[1]?.trim() || "",
+      output: match[2]?.trim() || "",
+      explanation: match[3]?.trim() || undefined
+    });
+  }
+
+  return examples;
+}
+
+
+const TestCases: React.FC<TestCasesProps> = ({ problemId, problem }) => {
   const [testCases, setTestCases] = useState<TestCase[]>([]);
   const [selectedCase, setSelectedCase] = useState(0);
 
+  console.log('proble id in test cases',problemId)
+
   useEffect(() => {
-    const generateTestCases = async () => {
-      const res = await fetch("/api/generateTestCases", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: problem }),
-      });
-
-      const data = await res.json();
-
-      try {
-        // Remove code fences if present
-        const jsonStr = data.testCases.replace(/```json|```/g, "").trim();
-        const parsed = JSON.parse(jsonStr);
-        setTestCases(parsed.testCases || []);
-      } catch (e) {
-        console.error("Invalid JSON format", e);
-      }
-    };
-
-    if (problem) generateTestCases();
+    if (problem) {
+      const parsed = parseExamples(problem);
+      
+      setTestCases(parsed);
+    }
   }, [problem]);
 
   return (
@@ -61,12 +69,13 @@ const TestCases: React.FC<TestCasesProps> = ({ problem }) => {
 
           {/* Selected case details */}
           <div className="bg-neutral-700 text-green-400 p-2 rounded">
-            <div>Input: {JSON.stringify(testCases[selectedCase].input)}</div>
-            <div>Output: {JSON.stringify(testCases[selectedCase].output)}</div>
+            <div>Input: {testCases[selectedCase].input}</div>
+            <div>Output: {testCases[selectedCase].output}</div>
+
           </div>
         </>
       ) : (
-        <p className="text-gray-400">Generating test cases...</p>
+        <p className="text-gray-400">No examples found in problem description.</p>
       )}
     </div>
   );

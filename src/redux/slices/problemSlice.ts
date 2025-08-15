@@ -1,6 +1,14 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { getProblems } from '../../app/services/user/userAPI'; 
 
+export interface TestCaseResult {
+  input: string;
+  expected: string;
+  actual: string;
+  passed: boolean;
+  error?: string;
+}
+
 export interface Problem {
     id: number;
     title: string;
@@ -26,16 +34,19 @@ export interface Problem {
   }
   
 
+  
 interface ProblemState {
   problems: Problem[];
   loading: boolean;
   error: string | null;
+  testCaseResults: Record<number, any[]>;
 }
 
 const initialState: ProblemState = {
   problems: [],
   loading: false,
   error: null,
+  testCaseResults: {},
 };
 
 
@@ -54,7 +65,15 @@ export const fetchProblems = createAsyncThunk(
 const problemSlice = createSlice({
   name: 'problems',
   initialState,
-  reducers: {},
+  reducers: {
+    setTestCaseResults: (state, action: PayloadAction<{ problemId: number; results: any[] }>) => {
+      const { problemId, results } = action.payload;
+      if (!state.testCaseResults) {
+        state.testCaseResults = {}; // ✅ make sure it exists
+      }
+      state.testCaseResults[problemId] = results;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProblems.pending, (state) => {
@@ -72,4 +91,5 @@ const problemSlice = createSlice({
   },
 });
 
+export const { setTestCaseResults } = problemSlice.actions;
 export default problemSlice.reducer;
