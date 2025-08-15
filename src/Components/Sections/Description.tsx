@@ -18,8 +18,9 @@ interface ParsedProblem {
 }
 
 function parseProblem(rawText: string): ParsedProblem {
+  // Replace the s flag with [\s\S] to match any character including newlines
   const exampleRegex =
-    /Example\s*\d*:\s*Input:\s*(.*?)\s*Output:\s*(.*?)\s*(?:Explanation:\s*(.*?))?(?=Example|\nConstraints|$)/gs;
+    /Example\s*\d*:\s*Input:\s*([\s\S]*?)\s*Output:\s*([\s\S]*?)\s*(?:Explanation:\s*([\s\S]*?))?(?=Example|\nConstraints|$)/g;
   const constraintRegex = /Constraints:\s*([\s\S]*)/i;
 
   let constraints: string[] = [];
