@@ -32,9 +32,14 @@ export async function POST(req: Request) {
     - Function name must be based on the problem title.
     - Parameters should be generic but meaningful (e.g., nums1, nums2, l1, l2).
     - Include a single comment "// Your code here" inside the body.
-    - Do NOT include explanations, imports, test cases, extra text, or markdown formatting.
+    - After the function, include multiple console.log() test cases:
+       * At least 2-3 test cases.
+       * Use realistic sample values for the parameters.
+       * Example: console.log(add(2, 3)); console.log(add(-1, 5));
+    - Do NOT include explanations, imports, extra text, or markdown formatting.
     - Output ONLY raw code, no backticks.
     `;
+    
     
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
