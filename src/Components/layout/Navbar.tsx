@@ -11,7 +11,6 @@ import Modal from '../ui/Modal';
 const Navbar:React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const currentUser = useSelector((state:RootState)=>state.auth.currentUser)
-  console.log('navbar',currentUser);
   const dispatch = useDispatch();
   const router = useRouter();
 

@@ -86,7 +86,11 @@ const Signin3: React.FC = () => {
 
     try {
       const res = await signUpRequest({ username, email, password });
-      console.log("Signup success:", res);
+
+      
+      localStorage.setItem("accessToken", res.user.accessToken);
+      localStorage.setItem("refreshToken", res.user.refreshToken);
+      
       dispatch(signupSuccess(res.user));
       enqueueSnackbar(`Welcome to BrainSprint , ${res.user.username}`, { variant: 'success' });
       router.push('/problems');
