@@ -90,8 +90,13 @@ const Signin3: React.FC = () => {
       
       localStorage.setItem("accessToken", res.user.accessToken);
       localStorage.setItem("refreshToken", res.user.refreshToken);
+
+      dispatch(signupSuccess({
+        user: res.user,
+        accessToken: res.accessToken,
+        refreshToken: res.refreshToken
+      }));
       
-      dispatch(signupSuccess(res.user));
       enqueueSnackbar(`Welcome to BrainSprint , ${res.user.username}`, { variant: 'success' });
       router.push('/problems');
     } catch (error:unknown) {
