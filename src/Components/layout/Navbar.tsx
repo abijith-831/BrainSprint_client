@@ -16,6 +16,9 @@ const Navbar:React.FC = () => {
 
   const handleLogout = () => {
     dispatch(logout()); 
+
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
     localStorage.removeItem('persist:root'); 
     router.push('/auth/login'); 
   };
