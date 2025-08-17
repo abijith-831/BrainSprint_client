@@ -70,10 +70,28 @@ export default function Login() {
 
     try {
       const result = await loginRequest({email,password})
-      console.log('loing res',result);
-      dispatch(loginSuccess(result.user))
-      enqueueSnackbar(`Welcome back , ${result.user.username}`,{variant:'success'})
-      router.push('/problems')
+      if (result.success) {
+        console.log('reess',result.user);
+        
+        const { userId, username, email, accessToken, refreshToken } = result.user;
+      console.log('sfsfsfs',result);
+      
+
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
+      
+
+        dispatch(
+          loginSuccess({
+            user: { userId, username, email },
+            accessToken,
+            refreshToken,
+          })
+        );
+      
+        enqueueSnackbar(`Welcome back, ${username}`, { variant: "success" });
+        router.push("/problems");
+      }
       
     } catch (error) {
       let message = "Login failed. Please try again.";
