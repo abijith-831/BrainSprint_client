@@ -1,0 +1,117 @@
+user db
+{
+  _id: ObjectId,
+  userId: ObjectId,
+  solutions: [
+    {
+      questionId: ObjectId,
+      code: String,               // last saved draft
+      language: String,
+      lastUpdated: Date,
+      commits: [
+        {
+          _id: ObjectId,
+          codeSnapshot: String,   // code at that test
+          result: String,         // e.g. "Accepted", "Wrong Answer", "Runtime Error"
+          createdAt: Date
+        }
+      ]
+    }
+  ]
+}
+
+
+or 
+
+{
+  "userId": "...",
+  "username": "...",
+  "profile": {
+    "realName": "...",
+    "avatarUrl": "...",
+    "country": "...",
+    "badges": [...]
+  },
+  "stats": {
+    "totalSolved": {...},
+    "submissions": [
+      { "difficulty": "Easy", "count": 150, "submissions": 200 },
+      { "difficulty": "Medium", "count": 100, "submissions": 150 },
+      { "difficulty": "Hard", "count": 20, "submissions": 30 }
+    ]
+  },
+  "contest": {
+    "rating": 1745.11,
+    "globalRanking": 32151,
+    "attendedContestsCount": 60,
+    "topPercentage": 9.59,
+    "contestHistory": [
+      {
+        "contest": {
+          "title": "Weekly Contest 350",
+          "startTime": "2025-08-10T00:00:00Z"
+        },
+        "problemsSolved": 2,
+        "totalProblems": 4,
+        "ranking": 1500,
+        "finishTimeInSeconds": 7200,
+        "trendDirection": "UP"
+      },
+      ...
+    ]
+  },
+  "submissionHistory": [...],
+  "privacySettings": {...}
+}
+
+
+
+solutions
+[
+  {
+    _id: ObjectId("...1"),
+    userId: ObjectId("user123"),
+    questionId: ObjectId("q101"),
+    code: "function twoSum(...) { ... }",
+    language: "javascript",
+    status: "attempted",
+    lastUpdated: ISODate("2025-08-18T12:00:00Z")
+  },
+  {
+    _id: ObjectId("...2"),
+    userId: ObjectId("user123"),
+    questionId: ObjectId("q205"),
+    code: "def reverseList(...): ...",
+    language: "python",
+    status: "attempted",
+    lastUpdated: ISODate("2025-08-18T12:02:00Z")
+  },
+  {
+    _id: ObjectId("...3"),
+    userId: ObjectId("user123"),
+    questionId: ObjectId("q330"),
+    code: "public int climbStairs(...) { ... }",
+    language: "java",
+    status: "attempted",
+    lastUpdated: ISODate("2025-08-18T12:04:00Z")
+  },
+  {
+    _id: ObjectId("...4"),
+    userId: ObjectId("user123"),
+    questionId: ObjectId("q450"),
+    code: "let isPalindrome = (s) => { ... }",
+    language: "javascript",
+    status: "attempted",
+    lastUpdated: ISODate("2025-08-18T12:06:00Z")
+  },
+  {
+    _id: ObjectId("...5"),
+    userId: ObjectId("user123"),
+    questionId: ObjectId("q512"),
+    code: "class Solution { ... }",
+    language: "c++",
+    status: "attempted",
+    lastUpdated: ISODate("2025-08-18T12:08:00Z")
+  }
+]
+

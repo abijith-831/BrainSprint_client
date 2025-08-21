@@ -7,18 +7,18 @@ import CodeCompiler from '@/Components/Sections/CodeCompiler';
 import Description from '@/Components/Sections/Description';
 import TestCases from '@/Components/Sections/TestCases';
 import Solution from '@/Components/Sections/Solutions';
+import ProtectedRoute from '@/utils/ProtectedRoute';
 import { Problem } from '@/redux/slices/problemSlice';
 
 interface PageProps {
   params: Promise<{ title: string; section: string }>;
 }
 
-export default function ProblemSectionPage({ params }: PageProps) {
+function ProblemSectionPage({ params }: PageProps) {
   const { problems } = useSelector((state: RootState) => state.problems);
   const [resolvedParams, setResolvedParams] = useState<{ title: string; section: string } | null>(null);
   const [view, setView] = useState<'description' | 'solution'>('description');
 
-  // Resolve the params Promise
   useEffect(() => {
     const resolveParams = async () => {
       const resolved = await params;
@@ -27,13 +27,11 @@ export default function ProblemSectionPage({ params }: PageProps) {
     resolveParams();
   }, [params]);
 
-  // Show loading state while params are being resolved
   if (!resolvedParams) {
     return <div className="text-center">Loading...</div>;
   }
 
   const formattedTitle = resolvedParams.title.replace(/-/g, ' ').toLowerCase();
-
   const currentProblem: Problem | undefined = problems.find(
     (p) => p.title.toLowerCase() === formattedTitle
   );
@@ -95,5 +93,14 @@ export default function ProblemSectionPage({ params }: PageProps) {
         </div>
       </div>
     </div>
+  );
+}
+
+// ✅ Wrap in ProtectedRoute before export
+export default function ProtectedProblemSectionPage(props: PageProps) {
+  return (
+    <ProtectedRoute>
+      <ProblemSectionPage {...props} />
+    </ProtectedRoute>
   );
 }

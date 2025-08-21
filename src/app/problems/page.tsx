@@ -15,8 +15,7 @@ const problems = () => {
             <div className=' w-3/4 rounded-md mt-2 '>
                 <div className='my-auto bg-gray-300 dark:bg-neutral-800 rounded-md '>
                   <Courses/>
-                </div>
-               
+                </div>              
                 <div className='bg-gray-300 dark:bg-neutral-800  mt-2 rounded-md'>
                   <Filter/>
                 </div>
