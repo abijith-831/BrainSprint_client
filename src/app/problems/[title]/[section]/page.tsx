@@ -40,6 +40,9 @@ function ProblemSectionPage({ params }: PageProps) {
     return <div className="text-center text-red-500">Problem not found</div>;
   }
 
+  console.log('cccccc',currentProblem);
+  
+
   return (
     <div className="h-screen flex flex-col">
       {/* Buttons */}
@@ -79,7 +82,8 @@ function ProblemSectionPage({ params }: PageProps) {
         <div className="flex w-1/2 flex-col gap-2 py-2 pr-2">
           <div className="flex items-center justify-center w-full h-3/5 rounded-md bg-neutral-800 border-b border-gray-600">
             <CodeCompiler
-              problemId={currentProblem.id}
+              problemId={currentProblem.id} 
+              problem_id={currentProblem._id} 
               problemTitle={currentProblem.title}
               problemDescription={currentProblem.description}
             />

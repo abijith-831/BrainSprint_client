@@ -5,13 +5,15 @@ import { useDispatch } from 'react-redux';
 import { setTestCaseResults } from "@/redux/slices/problemSlice";
 
 interface CodeCompilerProps {
-  problemId: number;
+  problemId: number
+  problem_id: string; 
   problemTitle: string;
   problemDescription: string;
 }
 
 export default function CodeCompiler({
   problemId,
+  problem_id,
   problemTitle,
   problemDescription,
 }: CodeCompilerProps) {
@@ -66,6 +68,7 @@ export default function CodeCompiler({
     try {
       const result = await testProblem({
         code,
+        problem_id,
         language,
         title: problemTitle,
         description: problemDescription,

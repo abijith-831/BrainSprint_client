@@ -35,6 +35,7 @@ export const getProblems = async ()=>{
 
 export const testProblem = async (payload: {
   code: string;
+  problem_id:string;
   language: string;
   title: string;
   description: string;

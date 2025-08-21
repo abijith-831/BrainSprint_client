@@ -10,6 +10,7 @@ export interface TestCaseResult {
 }
 
 export interface Problem {
+    _id: string;
     id: number;
     title: string;
     description: string;
