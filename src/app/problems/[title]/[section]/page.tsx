@@ -40,13 +40,10 @@ function ProblemSectionPage({ params }: PageProps) {
     return <div className="text-center text-red-500">Problem not found</div>;
   }
 
-  console.log('cccccc',currentProblem);
-  
-
   return (
     <div className="h-screen flex flex-col">
       {/* Buttons */}
-      <div className="flex justify-start gap-4 px-4 py-2 dark:bg-neutral-800 flex-shrink-0">
+      <div className="flex justify-start gap-4 px-4 py-2 dark:bg-neutral-800 flex-shrink-0 sticky top-0 z-10">
         <button
           className={`px-4 py-2 rounded ${
             view === 'description' ? 'bg-neutral-500 text-white' : 'bg-neutral-600'
@@ -66,9 +63,9 @@ function ProblemSectionPage({ params }: PageProps) {
       </div>
 
       {/* Main Content */}
-      <div className="w-full flex justify-between flex-1 min-h-0">
-        {/* Left */}
-        <div className="flex w-1/2 bg-neutral-800 m-2 rounded-md overflow-hidden">
+      <div className="w-full flex-1 min-h-0 flex flex-col lg:flex-row lg:justify-between">
+        {/* Left Panel (Description / Solution) */}
+        <div className="flex lg:w-1/2 bg-neutral-800 m-2 rounded-md overflow-hidden">
           <div className="w-full overflow-y-auto">
             {view === 'description' ? (
               <Description problem={currentProblem} />
@@ -78,17 +75,20 @@ function ProblemSectionPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Right */}
-        <div className="flex w-1/2 flex-col gap-2 py-2 pr-2">
-          <div className="flex items-center justify-center w-full h-3/5 rounded-md bg-neutral-800 border-b border-gray-600">
+        {/* Right Panel (Code + Test Cases) */}
+        <div className="flex flex-col gap-2 py-2 pr-2 lg:w-1/2">
+          {/* Compiler gets bigger height on mobile */}
+          <div className="flex items-center justify-center w-full min-h-[250px] lg:h-3/5 rounded-md bg-neutral-800 border-b border-gray-600 p-2">
             <CodeCompiler
-              problemId={currentProblem.id} 
-              problem_id={currentProblem._id} 
+              problemId={currentProblem.id}
+              problem_id={currentProblem._id}
               problemTitle={currentProblem.title}
               problemDescription={currentProblem.description}
             />
           </div>
-          <div className="flex items-center justify-center w-full h-2/5 bg-neutral-800 rounded-md">
+
+          {/* Test cases smaller on mobile */}
+          <div className="flex items-center justify-center w-full min-h-[150px] lg:h-2/5 bg-neutral-800 rounded-md p-2">
             <TestCases
               problemId={currentProblem.id}
               problem={currentProblem.description}
