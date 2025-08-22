@@ -36,55 +36,57 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-cover bg-center bg-[url('/images/bg-main-white.jpg')] dark:bg-[url('/images/bg-main-dark.jpg')]">
       {/* Navbar */}
-      <nav className="flex justify-between items-center px-4 sm:px-8 md:px-16 lg:px-24 xl:px-48 py-4">
-        <div className="text-2xl font-bold">BrainSprint</div>
+{/* Navbar */}
+<nav className="flex justify-between items-center px-4 sm:px-8 md:px-16 lg:px-24 xl:px-48 py-4">
+  <div className="text-2xl font-bold">BrainSprint</div>
 
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-4 items-center">
-          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
-            <ScrollLink to="explore" smooth duration={500} offset={-70}>
-              Explore
-            </ScrollLink>
-          </li>
-          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
-            <ScrollLink to="product" smooth duration={500} offset={-70}>
-              Product
-            </ScrollLink>
-          </li>
-          <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
-            <Link href="/developer">Developer</Link>
-          </li>
+  {/* Desktop Menu (only on lg and above) */}
+  <ul className="hidden lg:flex gap-4 items-center">
+    <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
+      <ScrollLink to="explore" smooth duration={500} offset={-70}>
+        Explore
+      </ScrollLink>
+    </li>
+    <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
+      <ScrollLink to="product" smooth duration={500} offset={-70}>
+        Product
+      </ScrollLink>
+    </li>
+    <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
+      <Link href="/developer">Developer</Link>
+    </li>
 
-          {user ? (
-            <>
-              <li className="px-4 py-2 font-semibold">Hi, {user.username}</li>
-              <li
-                className="px-4 py-2 text-red-500 rounded-md cursor-pointer"
-                onClick={() => setShowModal(true)}
-              >
-                Logout
-              </li>
-            </>
-          ) : (
-            <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
-              <Link href="/auth/login">Login</Link>
-            </li>
-          )}
-
-          <li className="px-4 py-2 bg-orange-400 rounded-md cursor-pointer hover:bg-orange-500 hover:text-white hover:font-semibold transition-all">
-            <Link href="/premium">Premium</Link>
-          </li>
-          <ThemeToggle />
-        </ul>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden p-2"
-          onClick={() => setMenuOpen(!menuOpen)}
+    {user ? (
+      <>
+        <li className="px-4 py-2 font-semibold">Hi, {user.username}</li>
+        <li
+          className="px-4 py-2 text-red-500 rounded-md cursor-pointer"
+          onClick={() => setShowModal(true)}
         >
-          {menuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </nav>
+          Logout
+        </li>
+      </>
+    ) : (
+      <li className="px-4 py-2 cursor-pointer hover:bg-black hover:text-white hover:rounded-full hover:font-semibold transition-all dark:hover:bg-white dark:hover:text-black">
+        <Link href="/auth/login">Login</Link>
+      </li>
+    )}
+
+    <li className="px-4 py-2 bg-orange-400 rounded-md cursor-pointer hover:bg-orange-500 hover:text-white hover:font-semibold transition-all">
+      <Link href="/premium">Premium</Link>
+    </li>
+    <ThemeToggle />
+  </ul>
+
+  {/* Mobile Menu Button (visible until lg) */}
+  <button
+    className="lg:hidden p-2"
+    onClick={() => setMenuOpen(!menuOpen)}
+  >
+    {menuOpen ? <X size={28} /> : <Menu size={28} />}
+  </button>
+</nav>
+
 
       {/* Mobile Dropdown */}
       {menuOpen && (
