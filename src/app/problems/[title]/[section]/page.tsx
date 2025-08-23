@@ -96,7 +96,7 @@ function ProblemSectionPage({ params }: PageProps) {
           </div>   
         </div>    
       </div>     
-    </div>
+    </div>    
   );
 }
 
