@@ -93,7 +93,7 @@ function ProblemSectionPage({ params }: PageProps) {
               problemId={currentProblem.id}
               problem={currentProblem.description}
             />
-          </div>
+          </div>   
         </div>
       </div>
     </div>
