@@ -38,23 +38,23 @@ const Navbar: React.FC = () => {
 
       {/* Desktop Menu */}
       <ul className="hidden md:flex gap-4 items-center">
-        <li className="nav-link">
+        <li className="nav-link  bg-gray-300 px-5 py-1 rounded-2xl hover:bg-gray-400 ">
           <Link href="/problems">Problems</Link>
         </li>
-        <li className="nav-link">
+        <li className="nav-link bg-gray-300 px-5 py-1  rounded-2xl   hover:bg-gray-400">
           <Link href="/contest">Contest</Link>
         </li>
-        <li className="nav-link">
+        <li className="nav-link  bg-gray-300 px-5 py-1  rounded-2xl  hover:bg-gray-400 ">
           <Link href="/discuss">Discuss</Link>
         </li>
-        <li className="nav-link">
+        <li className="nav-link  bg-gray-300 px-5 py-1  rounded-2xl   hover:bg-gray-400">
           <Link href="/interview">Interview</Link>
         </li>
-        <li className="nav-link">
+        <li className="nav-link  bg-gray-300 px-5 py-1  rounded-2xl  hover:bg-gray-400 ">
           <Link href="/store">Store</Link>
         </li>
         {!currentUser ? (
-          <li className="nav-link">
+          <li className="nav-link  bg-gray-300 px-3 py-1  rounded-2xl   hover:bg-gray-400">
             <Link href="/auth/login">Login/Signup</Link>
           </li>
         ) : (

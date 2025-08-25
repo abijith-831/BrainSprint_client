@@ -2,6 +2,7 @@ import Courses from '@/Components/layout/Courses'
 import Filter from '@/Components/layout/Filter'
 import Navbar from '@/Components/layout/Navbar'
 import ProblemSet from '@/Components/layout/ProblemSet'
+import Calender from '@/Components/Sections/Calender'
 import React from 'react'
 
 const Problems = () => {
@@ -23,8 +24,8 @@ const Problems = () => {
         </div>
 
         {/* Right Section */}
-        <div className="bg-green-400 w-full md:w-1/4 mt-2 rounded-md">
-          <h1>sfdknsjk</h1>
+        <div>
+          <Calender/>
         </div>
       </div>
     </div>
